@@ -11,7 +11,6 @@ import { useToast } from "../../components/ui/use-toast"
 import { useCreateUserAccount, useSignInAccount } from "../../lib/react-query/queriesAndMutations"
 import { useUserContext } from "../../context/AuthConext"
 
-// import Logo from "../../../public/assets/images/logo.svg";
 
 
 const SignupForm = () => {
