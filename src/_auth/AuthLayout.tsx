@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import sideImage from "../../public/assets/images/side-img.svg";
+// import sideImage from "../../public/assets/images/side-img.svg";
 const AuthLayout = () => {
   const isAuth = false;
   return (
@@ -11,7 +11,7 @@ const AuthLayout = () => {
           <Outlet />
         </section>
         <img
-          src={sideImage}
+          src="/assets/images/side-img.svg"
           alt='logo'
           className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat" />
       </>}
