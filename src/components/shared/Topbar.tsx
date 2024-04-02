@@ -18,14 +18,12 @@ const Topbar = () => {
     }, [isSuccess])
     return (
         <section className="topbar">
-            <div className="flex-between py-4 px-5">
+            <div className="flex-between py-4 px-4">
                 <Link to='/' className="flex gap-3 items-center">
-                    <img
-                        src='/assets/images/logo.svg'
-                        alt="logo"
-                        width={130}
-                        height={325}
-                    />
+                    <div className="flex justify-center items-center">
+                        <img src="/assets/images/logo.svg" width={40} height={40} alt="logo" />
+                        <h1 className="h3-bold">Momentgram</h1>
+                    </div>
                 </Link>
 
                 <div className="flex gap-4">

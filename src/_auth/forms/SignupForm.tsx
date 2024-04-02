@@ -77,7 +77,7 @@ const SignupForm = () => {
         <h1 className="h1-bold">Momentgram</h1>
         </div>
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-6">Create a new account</h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">To use Momentgram, please enter your acount details</p>
+        <p className="text-light-3 small-medium md:base-regular mt-2 text-center">To use Momentgram, <br /> please enter your acount details</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 sm:gap-2 w-full mt-4">
           <FormField
