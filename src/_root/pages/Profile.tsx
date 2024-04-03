@@ -43,15 +43,15 @@ const Profile = () => {
 
         <div className="flex xl:flex-row flex-col max-xl:items-center flex-1 gap-7">
 
-          <img src={user.imageUrl || "/assets/icons/profile-placeholder.svg"} alt="user image"
+          <img src={currentUser.imageUrl || "/assets/icons/profile-placeholder.svg"} alt="user image"
             className="w-28 h-28 lg:h-36 lg:w-36 rounded-full" />
 
           <div className="flex flex-col flex-1 justify-between md:mt-2">
 
             <div className="flex flex-col w-full">
 
-              <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">{user.name}</h1>
-              <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">@{user.username}</p>
+              <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">{currentUser.name}</h1>
+              <p className="small-regular md:body-medium text-light-3 text-center xl:text-left">@{currentUser.username}</p>
             </div>
 
             <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">

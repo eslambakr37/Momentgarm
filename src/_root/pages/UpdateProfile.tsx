@@ -30,6 +30,13 @@ const UpdateProfile = () => {
 
   const { mutateAsync: updateUser, isPending: isLoadingUpdate } = useUpdateUser();
 
+  useEffect(() => {
+    if (id != user.id) {
+      navigate('/');
+    }
+  }, [])
+
+
   // console.log(user);
 
   // 1. Define your form.

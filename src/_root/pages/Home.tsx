@@ -31,11 +31,16 @@ const Home = () => {
             //   ))}
             // </ul>
             <ul className="flex flex-col flex-1 gap-9 w-full">
-              {posts?.pages.map((page) => (
-                page?.documents.map((post) => (
-                  <PostCard key={post.caption} post={post} $id={""} $collectionId={""} $databaseId={""} $createdAt={""} $updatedAt={""} $permissions={[]} likes={[]} />
+              {posts?.pages.length === 0 ? (
+                <p className="text-light-4 text-center">No available posts</p>
+              ) : (
+                posts?.pages.map((page) => (
+                  page?.documents.map((post) => (
+                    <PostCard key={post.caption} post={post} $id={""} $collectionId={""} $databaseId={""} $createdAt={""} $updatedAt={""} $permissions={[]} likes={[]} />
+                  ))
                 ))
-              ))}
+              )}
+
             </ul>
           )}
         </div>
