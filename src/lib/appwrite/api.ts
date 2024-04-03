@@ -334,13 +334,16 @@ export async function deletePost(postId: string, imageId: string) {
     if (!postId || !imageId) throw Error;
 
     try {
-        await databases.deleteDocument(
+        const statusCode = await databases.deleteDocument(
             appwriteConfig.databasesId,
             appwriteConfig.postsCollectionId,
             postId
         )
+        if (!statusCode) throw Error;
 
-        return { state: 'ok' }
+        await deleteFile(imageId);
+
+        return { status: 'ok' };
     } catch (error) {
         console.log(error);
     }

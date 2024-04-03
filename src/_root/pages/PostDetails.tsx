@@ -1,19 +1,24 @@
 import { useParams } from "react-router";
-import { useGetPostById } from "../../lib/react-query/queriesAndMutations"
+import { useDeletePost, useGetPostById } from "../../lib/react-query/queriesAndMutations"
 import Loader from "../../components/shared/Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { multiFormatDateString } from "../../lib/utils";
 import { useUserContext } from "../../context/AuthConext";
 import { Button } from "../../components/ui/button";
 import PostStats from "../../components/shared/PostStats";
 
 const PostDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams()
   const { data: post, isPending } = useGetPostById(id || '');
+  const { mutate: deletePost, isPending: isDeleting, isSuccess: isDeleted } = useDeletePost();
   const { user } = useUserContext();
-
   const handleDeletePost = () => {
-  };
+    deletePost({ postId: id!, imageId: post?.imageId });
+    if (!isDeleting) {
+      navigate('/');
+    }
+  }
   return (
     <div className="post_details-container">
       {isPending ? <Loader /> :
@@ -46,9 +51,9 @@ const PostDetails = () => {
                   <Link to={`/update-post/${post?.$id}`}>
                     <img src="/assets/icons/edit.svg" alt="edit" width={24} height={24} />
                   </Link>
-                  <Button onClick={handleDeletePost} variant='ghost' className="ghost_details-delete_btn">
+                  {isDeleting ? (<Loader />) : (<Button onClick={handleDeletePost} variant='ghost' className="ghost_details-delete_btn">
                     <img src="/assets/icons/delete.svg" alt="delete" width={24} height={24} />
-                  </Button>
+                  </Button>)}
                 </> : ''}
 
 
@@ -77,7 +82,7 @@ const PostDetails = () => {
           </div>
         </div>
       }
-    </div>
+    </div >
   )
 }
 
