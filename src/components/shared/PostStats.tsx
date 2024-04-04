@@ -8,12 +8,10 @@ import Loader from "./Loader";
 
 
 const PostStats = ({ post, userId }: PoststatsProps) => {
-    // console.log(post?.likes);
     const likesList = post.likes.map((user: any) => user.$id);
-    // console.log(likesList);
     const [likes, setLikes] = useState(likesList);
     const [isSaved, setIsSaved] = useState(false);
-
+    
     const { mutate: likePost } = useLikePost();
     const { mutate: savePost, isPending: isSavingPost } = useSavePost();
     const { mutate: deleteSavedPost, isPending: isDeletingSaved } = useDeleteSavedPost();

@@ -4,7 +4,7 @@ import {
 } from "@tanstack/react-query";
 import {
     createPost, createUserAccount, deletePost,
-    deleteSavedPost, getCurrentUser, getInfinitePosts,
+    deleteSavedPost, followUser, getCurrentUser, getInfinitePosts,
     getPostById, getRecentPosts, getUserById, getUsers, likePost,
     savePost, searchPost, signInAccount, signOutAccount,
     updatePost,
@@ -61,7 +61,7 @@ export const useLikePost = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ postId, likesArray }: { postId: string ; likesArray: string[] }) => likePost(postId!, likesArray!),
+        mutationFn: ({ postId, likesArray }: { postId: string; likesArray: string[] }) => likePost(postId!, likesArray!),
         onSuccess: (data) => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id]
@@ -83,7 +83,7 @@ export const useSavePost = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ postId, userId }: { postId: string|undefined; userId: string }) => savePost(postId!, userId),
+        mutationFn: ({ postId, userId }: { postId: string | undefined; userId: string }) => savePost(postId!, userId),
         onSuccess: () => {
             // queryClient.invalidateQueries({
             //     queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id]
@@ -116,6 +116,7 @@ export const useDeleteSavedPost = () => {
 }
 
 export const useGetCurrentUser = () => {
+    // console.log('useGetCurrentUser');
     return useQuery({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
         queryFn: getCurrentUser,
@@ -215,3 +216,19 @@ export const useUpdateUser = () => {
         },
     });
 };
+
+export const useFollowUser = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ userId, followingArray }: { userId: string, followingArray: string[] }) => followUser(userId, followingArray),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_USERS]
+            })
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_CURRENT_USER]
+            })
+        }
+    })
+}
