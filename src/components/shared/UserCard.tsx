@@ -2,54 +2,18 @@ import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
 import { Models } from "appwrite";
 import { useUserContext } from "../../context/AuthConext";
-import { useEffect, useState } from "react";
-import { useFollowUser, useGetCurrentUser } from "../../lib/react-query/queriesAndMutations";
-import { checkIsFollowed } from "../../lib/utils";
-import Loader from "./Loader";
 
 type UserCardProps = {
+  followingState: string;
   user: Models.Document;
-  followingList: string[];
+  handleFollowButton: () => void;
+  index: number;
 };
 
-const UserCard = ({ user, followingList }: UserCardProps) => {
-  // console.log(user);
+const UserCard = ({ followingState, user, handleFollowButton, index }: UserCardProps) => {
   const { user: currentUser } = useUserContext();
-  // const followingList = currentUser?.following;
-  const [following, setFollowing] = useState(['']);
-  const { mutate: followUser, isSuccess: isFollowed, isPending } = useFollowUser();
-  // console.log(currentUser?.following);
-  // console.log(followingList);
 
 
-  const handleFollowButton = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    let newFollowing = [...following];
-    if (newFollowing.includes(user.$id)) {
-      newFollowing = newFollowing.filter((id) => id != user.$id);
-    }
-    else {
-      newFollowing.push(user.$id);
-    }
-    setFollowing(newFollowing);
-    followUser({ userId: currentUser.id, followingArray: newFollowing })
-  }
-
-  // useEffect(() => {
-  //   if (isPending) {
-  //     return
-  //   }
-  //   if (isFollowed || following[0] == '') {
-  //     setFollowing(currentUser?.following);
-  //     console.log('here');
-  //   }
-  // }, [isPending])
-
-  useEffect(() => {
-    if (following && following.length <= 1) {
-      setFollowing(followingList);
-    }
-  }, [followingList])
 
   return (
     <div className="user-card">
@@ -65,15 +29,16 @@ const UserCard = ({ user, followingList }: UserCardProps) => {
         <p className="small-regular text-light-3 text-center line-clamp-1">@{user.username}</p>
       </Link>
       {currentUser?.username == user.username ? ''
-        : <Button onClick={handleFollowButton} type="button" size="sm" className="shad-button_primary px-5">
-          {isPending ? <Loader /> : checkIsFollowed(followingList, user.$id) ? "Unfollow" : "Follow"}
-          {/* Follow */}
+        : <Button onClick={() => {
+          handleFollowButton(index)
+        }} type="button" size="sm" className="shad-button_primary px-5">
+          {followingState}
         </Button>}
 
 
 
 
-    </div>
+    </div >
   )
 }
 

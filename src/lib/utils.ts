@@ -45,5 +45,5 @@ export const checkIsSaved = (saveList: string[], userId: string) => {
 };
 
 export const checkIsFollowed = (followingList: string[], userId: string) => {
-  return followingList.includes(userId);
+  return followingList?.includes(userId);
 };

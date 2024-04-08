@@ -86,6 +86,7 @@ export async function getCurrentUser() {
         )
 
         if (!currentUser) throw Error;
+        console.log('getCurrentUser')
         return currentUser.documents[0];
     }
     catch (error) {
@@ -478,21 +479,38 @@ export async function updateUser(user: IUpdateUser) {
 }
 
 
-export async function followUser(userId: string, followingArray: string[]) {
+export async function followUser({ userId, followedId, followingArray, followersArray }: { userId: string, followedId: string, followingArray: string[], followersArray: string[] }) {
+    console.log(userId);
+    console.log(followedId);
+    console.log(followingArray);
+    console.log(followersArray)
     try {
-        const follow = await databases.updateDocument(
+        const following = await databases.updateDocument(
             appwriteConfig.databasesId,
             appwriteConfig.usersCollectionId,
             userId,
             {
                 following: followingArray
             }
+
         )
-        if (!follow) throw Error;
-        return follow;
+        if (following) {
+            const followed = await databases.updateDocument(
+                appwriteConfig.databasesId,
+                appwriteConfig.usersCollectionId,
+                followedId,
+                {
+                    followers: followersArray
+                }
+            )
+            if (!followed) throw Error;
+        }
+        return following;
 
     } catch (error) {
         console.log(error);
     }
+
+
 
 }

@@ -116,7 +116,6 @@ export const useDeleteSavedPost = () => {
 }
 
 export const useGetCurrentUser = () => {
-    // console.log('useGetCurrentUser');
     return useQuery({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
         queryFn: getCurrentUser,
@@ -221,7 +220,7 @@ export const useFollowUser = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ userId, followingArray }: { userId: string, followingArray: string[] }) => followUser(userId, followingArray),
+        mutationFn: ({ userId, followedId, followingArray, followersArray }: { userId: string, followedId: string, followingArray: string[], followersArray: string[] }) => followUser({userId, followedId, followingArray, followersArray}),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_USERS]
